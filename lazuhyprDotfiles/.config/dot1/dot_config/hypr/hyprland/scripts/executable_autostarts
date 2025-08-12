@@ -1,0 +1,12 @@
+#!/bin/bash
+apps=(
+  "waypaper --restore"
+  "clipse -listen"
+  "pypr"
+  "hyprpanel"
+  "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+)
+
+for app in "${apps[@]}"; do
+  app2unit -- $app &
+done

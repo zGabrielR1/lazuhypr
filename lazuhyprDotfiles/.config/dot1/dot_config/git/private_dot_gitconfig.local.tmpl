@@ -1,0 +1,21 @@
+{{- if eq .chezmoi.username "vantesh" }}
+[user]
+    name = "{{ .git.username }}"
+    email = "{{ .git.email }}"
+    signingkey = "{{ .git.signingKey }}"
+
+[url "git@github.com:vantesh/"]
+	insteadOf = https://github.com/vantesh/
+
+
+[gpg]
+    format = ssh
+
+[commit]
+    gpgsign = true
+
+{{ else }}
+[user]
+    name = "{{ .git_username }}"
+    email = "{{ .git_email }}"
+{{ end }}
