@@ -12,6 +12,7 @@ https://github.com/LoneWolf4713/aeronix-dotfiles
 https://github.com/viliusjan/dotfiles
 https://github.com/marzeq/dotfiles
 https://github.com/Alaa-MK/dotfiles
+https://github.com/Vantesh/dotfiles
 Doom Emacs:
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
