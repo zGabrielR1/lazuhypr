@@ -20,4 +20,4 @@ _loadGameMode() {
 if [ -f $HOME/.config/ml4w/settings/gamemode-enabled ]; then
     _loadGameMode
     notify-send "Gamemode activated" "Animations and blur disabled"
-fi
+fi'
