@@ -2,6 +2,7 @@
 #
 # .zshrc - Zsh file loaded on interactive shell sessions.
 #
+source ~/.config/shell/zellij.sh
 
 # Profiling
 [[ "$ZPROFRC" -ne 1 ]] || zmodload zsh/zprof
