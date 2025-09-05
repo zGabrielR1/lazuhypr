@@ -4,7 +4,7 @@ return {
     servers = {
       ruby_lsp = {
         mason = false,
-        cmd = { "/Users/alaa/.asdf/shims/ruby-lsp" },
+        cmd = { "~/.asdf/shims/ruby-lsp" },
       },
       rubocop = {
         enabled = false, -- it runs as a part of ruby-lsp
