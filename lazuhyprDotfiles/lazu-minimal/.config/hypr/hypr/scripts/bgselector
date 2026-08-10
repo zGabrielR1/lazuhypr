@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+wall_dir="$HOME/Pictures/wallpapers"
+cache_dir="$HOME/.cache/lazuhypr/thumbs"
+symlink_path="$HOME/.config/hypr/current_wallpaper"
+
+mkdir -p "$wall_dir"
+mkdir -p "$cache_dir"
+
+# Generate thumbnails using existing thumbgen script
+"$HOME/.config/hypr/scripts/thumbgen.sh"
+
+# List wallpapers with icons for rofi
+wall_selection=$(find "$wall_dir" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' -o -iname '*.webp' \) | while read -r imagen; do
+    filename="$(basename "$imagen")"
+    hash="$(sha1sum "$imagen" | awk '{print $1}')"
+    thumb="$cache_dir/$hash.sqre"
+    # Use thumbnail if exists, otherwise use original
+    if [ -f "$thumb" ]; then
+        echo -en "$filename\x00icon\x1f$thumb\n"
+    else
+        echo -en "$filename\x00icon\x1f$imagen\n"
+    fi
+done | rofi -dmenu -config "$HOME/.config/rofi/themes/bgselector.rasi")
+
+# Set wallpaper and update system
+if [ -n "$wall_selection" ]; then
+    selected_path=$(find "$wall_dir" -type f -name "$wall_selection" | head -n1)
+    
+    # Set wallpaper with swww
+    swww img "$selected_path" -t grow --transition-duration 1 --transition-fps 75
+    
+    # Create symlink for current wallpaper
+    mkdir -p "$(dirname "$symlink_path")"
+    ln -sf "$selected_path" "$symlink_path"
+    
+    # Create global symlinks for thumbnails
+    hash="$(sha1sum "$selected_path" | awk '{print $1}')"
+    mkdir -p "$HOME/.cache/lazuhypr"
+    ln -sf "$cache_dir/$hash.thmb" "$HOME/.cache/lazuhypr/wall.thmb"
+    ln -sf "$cache_dir/$hash.blur" "$HOME/.cache/lazuhypr/wall.blur"
+    ln -sf "$cache_dir/$hash.sqre" "$HOME/.cache/lazuhypr/wall.sqre"
+    ln -sf "$cache_dir/$hash.quad" "$HOME/.cache/lazuhypr/wall.quad"
+    
+    # Run Matugen
+    "$HOME/.config/hypr/scripts/MatugenWallpaper.sh"
+    
+    # Refresh hyprland
+    "$HOME/.config/hypr/scripts/Refresh.sh"
+    
+    exit 0
+else
+    exit 1
+fi

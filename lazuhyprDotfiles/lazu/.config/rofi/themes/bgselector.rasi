@@ -1,0 +1,76 @@
+// Import colors
+@import "../colors.rasi"
+
+configuration {
+    show-icons: true;
+}
+
+* {
+    background-color: @on-primary-fixed;
+    text-color: @on-surface;
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 90%;
+    height: 90%;
+    border-radius: 15px;
+    border: @secondary-container;
+    background-color: @on-primary-fixed;
+}
+
+mainbox {
+    background-color: transparent;
+    orientation: vertical;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    padding: 15px;
+    background-color: @on-primary;
+    border-radius: 10px;
+    children: [prompt, entry];
+}
+
+prompt {
+    background-color: inherit;
+    text-color: @primary-fixed;
+}
+
+entry {
+    background-color: inherit;
+    text-color: @on-surface;
+    cursor: text;
+}
+
+listview {
+    background-color: transparent;
+    columns: 4;
+    lines: 3;
+    spacing: 20px;
+    padding: 20px;
+}
+
+element {
+    background-color: @on-primary;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+element selected {
+    background-color: @primary;
+    text-color: @on-secondary;
+}
+
+element-icon {
+    size: 300px;
+}
+
+element-text {
+    text-color: inherit;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+}

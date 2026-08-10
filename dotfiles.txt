@@ -1,0 +1,62 @@
+dots:
+https://github.com/xeji01/hyprstellar.git - wip
+https://github.com/elifouts/Dotfiles - to start (tst)
+https://github.com/CharlesChiuGit/nvimdots.lua.git - tst
+https://github.com/gpakosz/.tmux.git - tst
+https://github.com/mylinuxforwork/dotfiles.git - tst
+https://github.com/r4ppz19/Arch-dotfiles - tst
+https://github.com/Abhra00/Matuprland.git - tst
+https://github.com/basecamp/omarchy.git - tst
+https://github.com/LoneWolf4713/seraphic.dotfiles
+https://github.com/LoneWolf4713/aeronix-dotfiles
+https://github.com/viliusjan/dotfiles
+https://github.com/marzeq/dotfiles
+https://github.com/Alaa-MK/dotfiles
+https://github.com/Vantesh/dotfiles
+https://github.com/NischalDawadi/Hyprlust.git
+https://github.com/binnewbs/arch-hyprland
+https://github.com/JaKooLit/Hyprland-Dots
+https://github.com/alex35mil/dotfiles
+https://github.com/xZepyx/HyprZepyx
+Doom Emacs:
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+Packages:
+hyprland
+hyprlock
+hypridle
+hyprsunset
+swww / hyprpaper
+swaync / dunst
+neovim / nano
+wlogout
+python-pywal16 / matugen-bin / hellwal / wallust
+lf / yazi
+kitty / wezterm
+jq
+unzip
+git
+flatpak
+rofi-wayland / wofi
+zsh
+fzf
+pavucontrol
+xdg-desktop-portal-hyprland
+gvfs
+qt6ct
+blueman
+cliphist
+grim / wf-recorder
+bluez-utils
+gnome-bluetooth-3.0 # aur
+playerctl
+slurp
+nwg-look
+waypaper
+ttf-fira-code
+otf-font-awesome
+power-profiles-daemon
+kvantum
+oh-my-posh
+termux
+qt6-wayland

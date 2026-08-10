@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+WALL_DIR="$HOME/Pictures/wallpapers"
+THUMB_DIR="$HOME/.cache/lazuhypr/thumbs"
+mkdir -p "$THUMB_DIR"
+
+# Generate thumbnails if they don't exist
+"$HOME/.config/hypr/scripts/thumbgen.sh"
+
+# Generate Rofi entries from existing thumbnails
+entries=""
+while IFS= read -r img; do
+    name="$(basename "$img")"
+    hash="$(sha1sum "$img" | awk '{print $1}')"
+    thumb="$THUMB_DIR/$hash.sqre"
+
+    entries+="$name\x00icon\x1f$thumb\n"
+done < <(find "$WALL_DIR" -type f \( -iname '*.jpg' -o -iname '*.png' -o -iname '*.jpeg' -o -iname '*.gif' \))
+
+# Run rofi to select
+chosen=$(printf "$entries" | rofi -dmenu -p "Select Wallpaper")
+
+# Set selected wallpaper
+if [ -n "$chosen" ]; then
+    full=$(find "$WALL_DIR" -type f -name "$chosen" | head -n1)
+    
+    # Set wallpaper with swww
+    swww img "$full" --transition-fps 60 --transition-type random
+    
+    # Create symlinks for current wallpaper
+    ln -sf "$full" "$HOME/.config/hypr/current_wallpaper"
+    
+    # Create global symlinks for thumbnails
+    hash="$(sha1sum "$full" | awk '{print $1}')"
+    mkdir -p "$HOME/.cache/lazuhypr"
+    ln -sf "$THUMB_DIR/$hash.thmb" "$HOME/.cache/lazuhypr/wall.thmb"
+    ln -sf "$THUMB_DIR/$hash.blur" "$HOME/.cache/lazuhypr/wall.blur"
+    ln -sf "$THUMB_DIR/$hash.sqre" "$HOME/.cache/lazuhypr/wall.sqre"
+    ln -sf "$THUMB_DIR/$hash.quad" "$HOME/.cache/lazuhypr/wall.quad"
+    
+    # Run Matugen
+    "$HOME/.config/hypr/scripts/MatugenWallpaper.sh"
+fi 
+
+hyprctl reload

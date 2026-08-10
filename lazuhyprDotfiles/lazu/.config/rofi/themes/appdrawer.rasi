@@ -1,0 +1,84 @@
+// Import colors
+@import "../colors.rasi"
+
+configuration {
+    modes: [drun];
+    drun-display-format: "{name}";
+    matching: "fuzzy";
+    sort: true;
+    sorting-method: "fzf";
+    icon-theme: "Colloid";
+    display-drun: "";
+}
+
+* {
+    background-color: @on-primary-fixed;
+    text-color: @on-surface;
+    font: "JetBrainsMono Nerd Font 10";
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 1000px;
+    border-radius: 15px;
+    border: 2px solid @secondary-container;
+    background-color: @on-primary-fixed;
+}
+
+mainbox {
+    background-color: transparent;
+    orientation: vertical;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    padding: 15px;
+    background-color: @on-primary;
+    border-radius: 10px;
+    children: [prompt, entry];
+}
+
+prompt {
+    background-color: inherit;
+    text-color: @primary-fixed;
+}
+
+entry {
+    background-color: inherit;
+    text-color: @on-surface;
+    cursor: text;
+    placeholder: "Search";
+    placeholder-color: inherit;
+}
+
+listview {
+    background-color: transparent;
+    columns: 1;
+    lines: 8;
+    spacing: 10px;
+    padding: 10px;
+}
+
+element {
+    background-color: @on-primary;
+    border-radius: 10px;
+    padding: 10px;
+    spacing: 10px;
+}
+
+element selected {
+    background-color: @primary;
+    text-color: @on-secondary;
+}
+
+element-icon {
+    size: 32px;
+}
+
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+}

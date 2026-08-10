@@ -1,0 +1,50 @@
+#!/bin/bash
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# Script for Random Wallpaper ( CTRL ALT W)
+
+wallDIR="$HOME/Pictures/wallpapers"
+SCRIPTSDIR="$HOME/.config/hypr/scripts"
+SYMLINK_PATH="$HOME/.config/hypr/current_wallpaper"
+THUMB_DIR="$HOME/.cache/lazuhypr/thumbs"
+
+focused_monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
+
+PICS=($(find -L ${wallDIR} -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.pnm" -o -name "*.tga" -o -name "*.tiff" -o -name "*.webp" -o -name "*.bmp" -o -name "*.farbfeld" -o -name "*.gif" \)))
+
+# Validate wallpapers exist
+if [[ ${#PICS[@]} -eq 0 ]]; then
+    notify-send "Error" "No wallpapers found in $wallDIR"
+    exit 1
+fi
+RANDOMPICS=${PICS[ $RANDOM % ${#PICS[@]} ]}
+
+
+# Transition config
+FPS=30
+TYPE="random"
+DURATION=1
+BEZIER=".43,1.19,1,.4"
+SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION --transition-bezier $BEZIER"
+
+
+swww query || swww-daemon --format xrgb && swww img -o $focused_monitor ${RANDOMPICS} $SWWW_PARAMS
+
+# === CREATE SYMLINK ===
+mkdir -p "$(dirname "$SYMLINK_PATH")"
+ln -sf "${RANDOMPICS}" "$SYMLINK_PATH"
+
+# === CREATE GLOBAL SYMLINKS FOR THUMBNAILS ===
+hash="$(sha1sum "$RANDOMPICS" | awk '{print $1}')"
+mkdir -p "$HOME/.cache/lazuhypr"
+ln -sf "$THUMB_DIR/$hash.thmb" "$HOME/.cache/lazuhypr/wall.thmb"
+ln -sf "$THUMB_DIR/$hash.blur" "$HOME/.cache/lazuhypr/wall.blur"
+ln -sf "$THUMB_DIR/$hash.sqre" "$HOME/.cache/lazuhypr/wall.sqre"
+ln -sf "$THUMB_DIR/$hash.quad" "$HOME/.cache/lazuhypr/wall.quad"
+
+wait $!
+# Use our new Matugen script instead of WallustSwww.sh
+"$SCRIPTSDIR/MatugenWallpaper.sh" &&
+
+wait $!
+sleep 2
+"$SCRIPTSDIR/Refresh.sh"
